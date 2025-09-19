@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+</head>
+<body>
+    <h1>Hello,{{user}}</h1>
+    <p>Here are your skills:</p>
+    <ul>
+        {% for skill in skills%}
+        <li>{{skill}}</li>
+        {%endfor%}
+    </ul>
+</body>
+</html>
