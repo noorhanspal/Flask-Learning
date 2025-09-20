@@ -10,7 +10,8 @@ def home():
 def greet():
     if request.method == 'POST':
         username = request.form.get('username')  # Form se data lena
-        return f"Hello, {username}! 🎉"
+        color = request.form.get('color')
+        return f"Hello, {username}! Your favourite color is {color} 🎉"
     return render_template('greet.html')  # Form dikhana
 
 if __name__ == '__main__':
