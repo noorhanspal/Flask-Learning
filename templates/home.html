@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Home Page</title>
+    <title>Home</title>
 </head>
 <body>
-    <h1>Welcome! 🏠</h1>
-    <p><a href="/greet">Go to Greet Page</a></p>
+    <h1>Saved Users</h1>
+    <ul>
+        {% for user in users %}
+            <li>{{ user.username }} - {{ user.color }}</li>
+        {% endfor %}
+    </ul>
+    <p><a href="/greet">Add New User</a></p>
 </body>
 </html>
