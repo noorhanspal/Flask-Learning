@@ -1,10 +1,16 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+
+# Secret key for flash messages
+app.secret_key = 'mysecretkey'
+
+# Database setup
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 db = SQLAlchemy(app)
 
+# User model
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), nullable=False)
@@ -23,10 +29,10 @@ def greet():
         new_user = User(username=username, color=color)
         db.session.add(new_user)
         db.session.commit()
-        return f"Saved! Hello, {username}! Your favorite color is {color} 🌈"
-    return render_template('greet.html')  # ← Yaha par function end hota hai
+        flash(f"User '{username}' added successfully! 🎉", 'success')
+        return redirect(url_for('home'))
+    return render_template('greet.html')
 
-# 👇 Yaha update route sahi jagah par likho (function ke bahar)
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
     user = User.query.get_or_404(id)
@@ -34,7 +40,8 @@ def update(id):
         user.username = request.form.get('username')
         user.color = request.form.get('color')
         db.session.commit()
-        return "User updated successfully!"
+        flash(f"User '{user.username}' updated successfully! ✨", 'info')
+        return redirect(url_for('home'))
     return render_template('update.html', user=user)
 
 @app.route('/delete/<int:id>')
@@ -42,7 +49,8 @@ def delete(id):
     user = User.query.get_or_404(id)
     db.session.delete(user)
     db.session.commit()
-    return "User deleted successfully!"
+    flash(f"User '{user.username}' deleted successfully! 🗑️", 'danger')
+    return redirect(url_for('home'))
 
 if __name__ == '__main__':
     with app.app_context():
