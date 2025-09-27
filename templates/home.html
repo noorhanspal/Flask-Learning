@@ -1,20 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Home</title>
+    <title>All Users</title>
 </head>
 <body>
-    <h1>Saved Users</h1>
-    <ul>
-    {% for user in users %}
-        <li>
-            {{ user.username }} - {{ user.color }}
-            <a href="/update/{{ user.id }}">✏️ Edit</a>
-            <a href="/delete/{{ user.id }}">🗑️ Delete</a>
-        </li>
-    {% endfor %}
-</ul>
+    <h2>All Users</h2>
 
-    <p><a href="/greet">Add New User</a></p>
+    <table border="1" cellpadding="10">
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Favorite Color</th>
+            <th>Actions</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.color }}</td>
+            <td>
+                <a href="/update/{{ user.id }}">Update</a> |
+                <a href="/delete/{{ user.id }}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+    <a href="/greet">➕ Add New User</a>
 </body>
 </html>
